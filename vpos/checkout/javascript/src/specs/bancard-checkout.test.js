@@ -29,6 +29,24 @@ describe('Bancard', () => {
       });
     });
 
+    describe('CheckoutExample', () => {
+      beforeEach(() => {
+        instance.CheckoutExample.createStaticForm('targetDiv', '1234');
+        window.location.replace = jest.fn();
+      });
+
+      afterEach(() => { instance.destroy(); });
+
+      test('It creates the iframe', () => {
+        expect(document.querySelectorAll('iframe').length).toBe(1);
+      });
+
+      test('Iframe points to correct URL', () => {
+        expect(document.querySelectorAll('iframe')[0].getAttribute('src'))
+          .toBe('https://desa.infonet.com.py:8085/checkout/static_example?application_id=1234');
+      });
+    });
+
     describe('Cards', () => {
       beforeEach(() => {
         instance.Cards.createForm('targetDiv', '1234');
@@ -44,6 +62,24 @@ describe('Bancard', () => {
       test('Iframe points to correct URL', () => {
         expect(document.querySelectorAll('iframe')[0].getAttribute('src'))
           .toBe('https://desa.infonet.com.py:8085/checkout/register_card/new?process_id=1234');
+      });
+    });
+
+    describe('CardsExample', () => {
+      beforeEach(() => {
+        instance.CardsExample.createStaticForm('targetDiv', '1234');
+        window.location.replace = jest.fn();
+      });
+
+      afterEach(() => { instance.destroy(); });
+
+      test('It creates the iframe', () => {
+        expect(document.querySelectorAll('iframe').length).toBe(1);
+      });
+
+      test('Iframe points to correct URL', () => {
+        expect(document.querySelectorAll('iframe')[0].getAttribute('src'))
+          .toBe('https://desa.infonet.com.py:8085/checkout/static_example/register_card?application_id=1234');
       });
     });
 
