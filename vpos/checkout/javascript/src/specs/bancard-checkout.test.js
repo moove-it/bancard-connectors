@@ -186,7 +186,7 @@ describe('Bancard', () => {
 
       test('Iframe points to correct URL', () => {
         expect(document.querySelectorAll('iframe')[0].getAttribute('src'))
-          .toBe('https://desa.infonet.com.py:8085/checkout/charge_3ds/new?process_id=1234');
+          .toBe('https://desa.infonet.com.py:8085/checkout/charge_3ds/new?process_id=12345');
       });
     });
   });
