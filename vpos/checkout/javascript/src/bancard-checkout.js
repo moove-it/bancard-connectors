@@ -2,7 +2,9 @@ import exceptions from './bancard-checkout-exceptions';
 import constants from './constants';
 
 const CHECKOUT_IFRAME_URL = `${constants.BANCARD_URL}/checkout/new`;
+const CHECKOUT_EXAMPLE_IFRAME_URL = `${constants.BANCARD_URL}/checkout/static_example`;
 const NEW_CARD_IFRAME_URL = `${constants.BANCARD_URL}/checkout/register_card/new`;
+const CARD_EXAMPLE_IFRAME_URL = `${constants.BANCARD_URL}/checkout/static_example/register_card`;
 const ZIMPLE_IFRAME_URL = `${constants.BANCARD_URL}/checkout/zimple/new`;
 const ALLOWED_STYLES_URL = `${constants.BANCARD_URL}/checkout/allowed_styles`;
 const CONFIRMATION_IFRAME_URL = `${constants.BANCARD_URL}/alias_token/confirmation/new`;
@@ -159,6 +161,18 @@ const internalMethods = {
     internalMethods.initializeIframe(divId, iFrameUrl, options);
   },
 
+  createStaticForm: ({
+    divId, applicationId, options, url,
+  }) => {
+    if (typeof applicationId !== 'string' || applicationId === '') {
+      throw new exceptions.InvalidParameter('Application id');
+    }
+
+    const iFrameUrl = internalMethods.addParamToUrl(url, 'application_id', applicationId);
+
+    internalMethods.initializeIframe(divId, iFrameUrl, options);
+  },
+
   loadPinPad: ({
     divId, aliasToken, options, url,
   }) => {
@@ -190,12 +204,34 @@ class Bancard {
     };
   }
 
+  get CheckoutExample() {
+    return {
+      createStaticForm: (divId, applicationId, options) => {
+        this.divId = divId;
+        internalMethods.createStaticForm({
+          divId, applicationId, options, url: CHECKOUT_EXAMPLE_IFRAME_URL,
+        });
+      },
+    };
+  }
+
   get Cards() {
     return {
       createForm: (divId, processId, options) => {
         this.divId = divId;
         internalMethods.createForm({
           divId, processId, options, url: NEW_CARD_IFRAME_URL,
+        });
+      },
+    };
+  }
+
+  get CardsExample() {
+    return {
+      createStaticForm: (divId, applicationId, options) => {
+        this.divId = divId;
+        internalMethods.createStaticForm({
+          divId, applicationId, options, url: CARD_EXAMPLE_IFRAME_URL,
         });
       },
     };

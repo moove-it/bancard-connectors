@@ -9,7 +9,7 @@ jobs:
   build:
     name: 'Run tests'
     runs-on: ubuntu-latest
-    container: node:9.4.0
+    container: node:23.7.0
     defaults:
       run:
         working-directory: ./vpos/checkout/javascript
@@ -17,7 +17,7 @@ jobs:
     timeout-minutes: 10
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - run: yarn install --frozen-lockfile
     - run: yarn test
 
